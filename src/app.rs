@@ -52,7 +52,6 @@ pub fn App() -> impl IntoView {
         }>
             <main>
                 <div>
-                    //<NavigationBar/>
                     <div>
                         <div>
                             <Drawer/>
@@ -105,10 +104,17 @@ pub fn ContainerHeader() -> impl IntoView {
         <Suspense>
             <pre>{
                 move || {
-                    view! {
-                        <div>{format!("{:?}", int_data.get())}</div>
-                        <Outlet/>
-                    }
+                    int_data.with(|result| match result {
+                        Some(Ok(data)) => {
+                            view! {
+                                <div>{format!("{:?}", data)}</div>
+                                <Outlet/>
+                            }.into_view()
+                        },
+                        _ => {
+                            view! { <Outlet/> }.into_view()
+                        }
+                    })
                 }
             }</pre>
         </Suspense>
