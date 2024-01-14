@@ -53,12 +53,8 @@ pub fn App() -> impl IntoView {
             <main>
                 <div>
                     <div>
-                        <div>
-                            <Drawer/>
-                        </div>
                         <Routes>
-                            <Route path="/" view=Home/>
-                            <Route path="/container" view=ContainerHeader>
+                            <Route path="/" view=ContainerHeader>
                                 <Route path="/" view=ContainerContent/>
                                 <Route path="/object" view=Object/>
                             </Route>
@@ -67,33 +63,6 @@ pub fn App() -> impl IntoView {
                 </div>
             </main>
         </Router>
-    }
-}
-
-#[component]
-pub fn Home() -> impl IntoView {
-    view! {
-        <div>
-            "Home"
-        </div>
-    }
-}
-
-#[component]
-pub fn Drawer() -> impl IntoView {
-    let string_data = create_resource(move || (), |_| string_data());
-
-    view! {
-        <Suspense>
-            <pre>{
-                move || {
-                    format!("{:?}", string_data.get());
-                    view! {
-                        <a href="/container">"Container 1"</a>
-                    }
-                }
-            }</pre>
-        </Suspense>
     }
 }
 
@@ -130,7 +99,7 @@ pub fn ContainerContent() -> impl IntoView {
                 move || {
                     view! {
                         <div>{format!("{:?}", int_data.get())}</div>
-                        <a href="/container/object">"Object 1"</a>
+                        <a href="/object">"Object 1"</a>
                     }
                 }
             }</pre>
